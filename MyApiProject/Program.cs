@@ -36,9 +36,24 @@ app.MapGet("/weatherforecast", () =>
 .WithName("GetWeatherForecast")
 .WithOpenApi();
 
+app.MapGet("/customers", () =>
+{
+    var customers = new[]
+    {
+        new Customer(1, "Alice", "alice@example.com"),
+        new Customer(2, "Bob", "bob@example.com"),
+        new Customer(3, "Charlie", "charlie@example.com")
+    };
+    return Results.Ok(customers);
+})
+.WithName("GetCustomers")
+.WithOpenApi();
+
 app.Run();
 
 record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
 {
     public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
 }
+
+record Customer(int Id, string Name, string Email);
